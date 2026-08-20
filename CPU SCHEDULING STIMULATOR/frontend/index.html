@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Operating System Simulator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+        <div class="header-content">
+            <div>
+                <h1>Operating System Simulator</h1>
+                <p>CPU Scheduling • Page Replacement • Disk Scheduling • Deadlock Avoidance</p>
+            </div>
+
+            <div class="status">
+                ● Simulator Ready
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <nav>
+        <button class="nav-btn active" onclick="showSection('cpu')">
+            CPU Scheduling
+        </button>
+
+        <button class="nav-btn" onclick="showSection('page')">
+            Page Replacement
+        </button>
+
+        <button class="nav-btn" onclick="showSection('disk')">
+            Disk Scheduling
+        </button>
+
+        <button class="nav-btn" onclick="showSection('banker')">
+            Banker's Algorithm
+        </button>
+    </nav>
+
+
+    <main>
+
+        <!-- ================================================= -->
+        <!-- CPU SCHEDULING -->
+        <!-- ================================================= -->
+
+        <section id="cpu" class="section active-section">
+
+            <div class="section-title">
+                <h2>CPU Scheduling</h2>
+                <p>Analyze and compare CPU scheduling algorithms.</p>
+            </div>
+
+            <div class="card">
+
+                <label>Scheduling Algorithm</label>
+
+                <select id="cpuAlgorithm">
+                    <option value="FCFS">FCFS</option>
+                    <option value="SPN">SPN / Non-Preemptive SJF</option>
+                    <option value="SRTF">SRTF</option>
+                    <option value="RR">Round Robin</option>
+                    <option value="HRRN">HRRN</option>
+                    <option value="MLFQ">Multilevel Feedback Queue</option>
+                    <option value="AGING">Aging</option>
+                </select>
+
+                <div id="quantumBox">
+                    <label>Time Quantum</label>
+                    <input type="number" id="quantum" value="2" min="1">
+                </div>
+
+                <label>Process Input</label>
+
+                <p class="hint">
+                    Format: Process Name, Arrival Time, Burst Time
+                </p>
+
+                <textarea id="processInput" rows="7">P1 0 5
+P2 1 3
+P3 2 8
+P4 3 6</textarea>
+
+                <div class="button-row">
+                    <button class="primary-btn" onclick="runCPU()">
+                        Run Algorithm
+                    </button>
+
+                    <button class="secondary-btn" onclick="compareCPU()">
+                        Compare Algorithms
+                    </button>
+
+                    <button class="clear-btn" onclick="clearCPU()">
+                        Clear
+                    </button>
+                </div>
+
+            </div>
+
+
+            <!-- CPU RESULTS -->
+
+            <div id="cpuResult" class="result-area"></div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- PAGE REPLACEMENT -->
+        <!-- ================================================= -->
+
+        <section id="page" class="section">
+
+            <div class="section-title">
+                <h2>Page Replacement</h2>
+                <p>Simulate memory page replacement algorithms.</p>
+            </div>
+
+            <div class="card">
+
+                <label>Page Replacement Algorithm</label>
+
+                <select id="pageAlgorithm">
+                    <option value="FIFO">FIFO</option>
+                    <option value="LRU">LRU</option>
+                    <option value="OPTIMAL">Optimal</option>
+                </select>
+
+                <label>Reference String</label>
+
+                <input
+                    type="text"
+                    id="pageInput"
+                    value="1 2 3 4 1 2 5 1 2 3 4 5"
+                >
+
+                <label>Number of Frames</label>
+
+                <input
+                    type="number"
+                    id="frames"
+                    value="3"
+                    min="1"
+                >
+
+                <div class="button-row">
+
+                    <button class="primary-btn" onclick="runPageReplacement()">
+                        Run Algorithm
+                    </button>
+
+                    <button class="clear-btn" onclick="clearPage()">
+                        Clear
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div id="pageResult" class="result-area"></div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- DISK SCHEDULING -->
+        <!-- ================================================= -->
+
+        <section id="disk" class="section">
+
+            <div class="section-title">
+                <h2>Disk Scheduling</h2>
+                <p>Calculate disk head movement using different algorithms.</p>
+            </div>
+
+            <div class="card">
+
+                <label>Disk Scheduling Algorithm</label>
+
+                <select id="diskAlgorithm">
+
+                    <option value="FCFS">FCFS</option>
+                    <option value="SSTF">SSTF</option>
+                    <option value="SCAN">SCAN</option>
+                    <option value="CSCAN">C-SCAN</option>
+                    <option value="LOOK">LOOK</option>
+                    <option value="CLOOK">C-LOOK</option>
+
+                </select>
+
+
+                <label>Disk Requests</label>
+
+                <input
+                    type="text"
+                    id="diskRequests"
+                    value="82 170 43 140 24 16 190"
+                >
+
+
+                <label>Initial Head Position</label>
+
+                <input
+                    type="number"
+                    id="diskHead"
+                    value="50"
+                    min="0"
+                >
+
+
+                <label>Disk Size</label>
+
+                <input
+                    type="number"
+                    id="diskSize"
+                    value="200"
+                    min="1"
+                >
+
+
+                <label>Direction</label>
+
+                <select id="diskDirection">
+
+                    <option value="right">
+                        Right
+                    </option>
+
+                    <option value="left">
+                        Left
+                    </option>
+
+                </select>
+
+
+                <div class="button-row">
+
+                    <button class="primary-btn" onclick="runDisk()">
+                        Run Algorithm
+                    </button>
+
+                    <button class="clear-btn" onclick="clearDisk()">
+                        Clear
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div id="diskResult" class="result-area"></div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- BANKER'S ALGORITHM -->
+        <!-- ================================================= -->
+
+        <section id="banker" class="section">
+
+            <div class="section-title">
+
+                <h2>Banker's Algorithm</h2>
+
+                <p>
+                    Check whether the system is in a safe state.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <label>Number of Processes</label>
+
+                <input
+                    type="number"
+                    id="bankerProcesses"
+                    value="5"
+                    min="1"
+                >
+
+
+                <label>Number of Resource Types</label>
+
+                <input
+                    type="number"
+                    id="bankerResources"
+                    value="3"
+                    min="1"
+                >
+
+
+                <label>Allocation Matrix</label>
+
+                <textarea id="allocationMatrix" rows="6">0 1 0
+2 0 0
+3 0 2
+2 1 1
+0 0 2</textarea>
+
+
+                <label>Maximum Matrix</label>
+
+                <textarea id="maximumMatrix" rows="6">7 5 3
+3 2 2
+9 0 2
+2 2 2
+4 3 3</textarea>
+
+
+                <label>Available Resources</label>
+
+                <input
+                    type="text"
+                    id="availableResources"
+                    value="3 3 2"
+                >
+
+
+                <button class="primary-btn" onclick="runBanker()">
+                    Check Safe State
+                </button>
+
+            </div>
+
+
+            <div id="bankerResult" class="result-area"></div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            Operating System Simulator
+        </p>
+
+        <p>
+            CPU Scheduling • Memory Management • Disk Scheduling • Deadlock Avoidance
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
